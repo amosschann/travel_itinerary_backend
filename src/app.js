@@ -1,13 +1,21 @@
-var logger = require('morgan');
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var indexRouter = require('./routes/index');
-var app = express();
+const express = require('express');
+const app = express();
+const { expressjwt: jwt } = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const indexRouter = require('./routes/index');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+// Enable CORS
+app.use(cors());
+
+// Enable the use of request body parsing middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+//API endpoints
 app.use('/v1', indexRouter);
 
 module.exports = app;
