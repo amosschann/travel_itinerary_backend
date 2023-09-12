@@ -6,21 +6,48 @@ const { handleServerError } = require('../helpers/errorHelper');
 
 /*Travels*/
 //with middleware 
-travelsRouter.get('/get-travels', authenticateToken, (req, res) => {
+
+travelsRouter.get('/get-travels', authenticateToken, async (req, res) => {
     try {
-        let sql = 'SELECT * FROM travels';
-        database.query(sql, (err, result) => {
+      const { user_id } = req.user;
+  
+      const getUpcomingTravel = () => {
+        return new Promise((resolve, reject) => {
+          const upcomingQuery = 'SELECT * FROM travels WHERE user_id=? AND start_date > CURDATE() ORDER BY start_date ASC LIMIT 1 ';
+          database.query(upcomingQuery, [user_id], (err, result) => {
             if (err) {
-            handleServerError(res, err);
+              reject(err);
             } else {
-            console.log(result);
-            res.status(200).json({ result });
+              resolve(result[0]);
             }
+          });
         });
+      };
+  
+      const getCompletedTravel = () => {
+        return new Promise((resolve, reject) => {
+          const completedQuery = 'SELECT * FROM travels WHERE user_id=? AND start_date <= CURDATE() ORDER BY start_date DESC LIMIT 1 ';
+          database.query(completedQuery, [user_id], (err, result) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result[0]);
+            }
+          });
+        });
+      };
+  
+      const [upcomingTravel, completedTravel] = await Promise.all([
+        getUpcomingTravel(),
+        getCompletedTravel()
+      ]);
+  
+      res.status(200).json({ upcomingTravel, completedTravel });
     } catch (error) {
-        handleServerError(res, error);
+      handleServerError(res, error);
     }
-});
+  });
+  
 
 travelsRouter.post('/add-travels', authenticateToken, (req, res) => {
     try {

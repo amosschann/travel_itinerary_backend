@@ -4,8 +4,8 @@ const database= require('../helpers/database');
 const { handleServerError } = require('../helpers/errorHelper');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const accessTokenSecret = 'youraccesstokensecret';
 const fs = require('fs');
+const authenticateToken = require('../helpers/tokenHelper');
 
 
 /*Auth*/
@@ -46,6 +46,13 @@ authRouter.post('/signIn', (req, res) => {
   } catch (err) {
     handleServerError(res, err);
   }
+});
+
+//with middleware
+
+authRouter.get('/token-check', authenticateToken, async (req, res) => {
+  console.log('proper request')
+  res.status(200).json({ message: 'User has valid access token Successful'});
 });
 
 module.exports = authRouter;
