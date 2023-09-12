@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const travelsRouter = require('./routes/Travels')
+const itineraryRouter = require('./routes/itineraries')
 
 const app = express();
 // Enable CORS
@@ -23,6 +24,6 @@ app.use(bodyParser.urlencoded({
 app.use('/api/auth/', authRouter);
 app.use('/api/users/', usersRouter)
 app.use('/api/travels/', travelsRouter)
-
+app.use('/api/itinerary/', itineraryRouter)
 
 module.exports = app;

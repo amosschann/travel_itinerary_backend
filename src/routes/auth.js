@@ -51,7 +51,7 @@ authRouter.post('/signIn', (req, res) => {
 //with middleware
 
 authRouter.get('/token-check', authenticateToken, async (req, res) => {
-  console.log('proper request')
+  console.log('valid token check')
   res.status(200).json({ message: 'User has valid access token Successful'});
 });
 
