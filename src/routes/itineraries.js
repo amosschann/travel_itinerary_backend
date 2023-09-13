@@ -49,4 +49,23 @@ itineraryRouter.get('/get-itinerary', authenticateToken, async (req, res) => {
   }
 });
 
+itineraryRouter.post('/add-itinerary', authenticateToken, async (req, res) => {
+  try {
+    const { user_id } = req.user;
+    const { activity_name, start_time, end_time, travel_id, date } = req.body;
+    // console.log(travel_id, date, start_time, end_time, activity_name)
+    let itineraryQuery = 'INSERT INTO itineraries (travel_id, date, start_time, end_time, activity_name) VALUES (?, ?, ?, ?, ?)'
+    const values = [travel_id, date, start_time, end_time, activity_name];
+    database.query(itineraryQuery, values, (err, result) => {
+        if (err) {
+        handleServerError(res, err);
+        } else {
+        res.status(200).json({ result });
+        }
+    });
+  } catch (error) {
+    handleServerError(res, error);
+  }
+});
+
 module.exports = itineraryRouter;
