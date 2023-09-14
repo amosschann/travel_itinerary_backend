@@ -68,4 +68,41 @@ itineraryRouter.post('/add-itinerary', authenticateToken, async (req, res) => {
   }
 });
 
+itineraryRouter.get('/get-current-date-itinerary', authenticateToken, async (req, res) => {
+  try {
+    const { user_id } = req.user;
+    const {travel_id, date} = req.query;
+    let itineraryQuery = 'SELECT * FROM itineraries WHERE travel_id= ? and date=? ORDER BY start_time ASC'
+    const values = [travel_id, date];
+    database.query(itineraryQuery, values, (err, result) => {
+        if (err) {
+        handleServerError(res, err);
+        } else {
+        res.status(200).json({ result });
+        }
+    });
+  } catch (error) {
+    handleServerError(res, error);
+  }
+});
+
+itineraryRouter.post('/delete-itinerary', authenticateToken, async (req, res) => {
+  try {
+    const { user_id } = req.user;
+    const { activity_id } = req.body;
+    // console.log(travel_id, date, start_time, end_time, activity_name)
+    let itineraryQuery = 'DELETE FROM itineraries WHERE ID=?'
+    const values = [activity_id];
+    database.query(itineraryQuery, values, (err, result) => {
+        if (err) {
+        handleServerError(res, err);
+        } else {
+        res.status(200).json({ result });
+        }
+    });
+  } catch (error) {
+    handleServerError(res, error);
+  }
+});
+
 module.exports = itineraryRouter;
