@@ -4,8 +4,8 @@ require('dotenv').config();
 // Database connection
 
 const database = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
+  host: process.env.host,
+  user: process.env.user,
   password: process.env.DATABASE_PASSWORD,
   database: 'travelitineraries'
 });
