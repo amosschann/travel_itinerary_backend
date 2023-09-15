@@ -10,7 +10,7 @@ function authenticateToken(req, res, next) {
     return res.status(401).json({ message: 'Unauthorized: Token is missing' });
   }
 
-  const privateKey = fs.readFileSync('../private.pem', 'utf8');
+  const privateKey = fs.readFileSync('./../private.pem', 'utf8');
 
   jwt.verify(token, privateKey, (err, decoded) => {
     if (err) {

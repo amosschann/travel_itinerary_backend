@@ -4,7 +4,7 @@
  */
 const debug = require('debug');
 const http = require('http');
-const app = require('../app');
+const app = require('./../app');
 /**
  * Normalize a port into a number, string, or false.
  */

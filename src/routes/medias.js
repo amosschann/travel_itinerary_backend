@@ -1,8 +1,8 @@
 const express = require('express');
 const mediasRouter = express.Router();
-const database = require('../helpers/database');
-const authenticateToken = require('../helpers/tokenHelper');
-const { handleServerError } = require('../helpers/errorHelper');
+const database = require('./../helpers/database');
+const authenticateToken = require('./../helpers/tokenHelper');
+const { handleServerError } = require('./../helpers/errorHelper');
 
 /*Travels*/
 //with middleware 

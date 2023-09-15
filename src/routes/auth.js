@@ -1,11 +1,11 @@
 const express = require('express');
 const authRouter = express.Router();
-const database= require('../helpers/database');
-const { handleServerError } = require('../helpers/errorHelper');
+const database= require('./../helpers/database');
+const { handleServerError } = require('./../helpers/errorHelper');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-const authenticateToken = require('../helpers/tokenHelper');
+const authenticateToken = require('./../helpers/tokenHelper');
 
 
 /*Auth*/
@@ -31,7 +31,7 @@ authRouter.post('/signIn', (req, res) => {
             console.log('successful user Sign In');
             //generate JWT token
             const aYearFromNow = Math.floor(Date.now() / 1000) + 31536000; // 31536000 seconds in a year
-            const privateKey = fs.readFileSync('../private.pem', 'utf8');
+            const privateKey = fs.readFileSync('./../private.pem', 'utf8');
             const accessToken = jwt.sign({ username: email, user_id: id,  exp: aYearFromNow }, privateKey);
 
             res.status(200).json({ message: 'User Sign In Successful', accessToken: accessToken });
