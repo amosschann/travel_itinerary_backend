@@ -31,7 +31,7 @@ authRouter.post('/signIn', (req, res) => {
             console.log('successful user Sign In');
             //generate JWT token
             const aYearFromNow = Math.floor(Date.now() / 1000) + 31536000; // 31536000 seconds in a year
-            const privateKey = fs.readFileSync('../private.pem', 'utf8');
+            const privateKey = process.env.PRIVATE_KEY;
             const accessToken = jwt.sign({ username: email, user_id: id,  exp: aYearFromNow }, privateKey);
 
             res.status(200).json({ message: 'User Sign In Successful', accessToken: accessToken });
