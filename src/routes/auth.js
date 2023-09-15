@@ -48,6 +48,11 @@ authRouter.post('/signIn', (req, res) => {
   }
 });
 
+//get request test
+authRouter.get('/check', (req, res) => {
+  res.status(200).json({ message: 'api service is up'});
+});
+
 //with middleware
 
 authRouter.get('/token-check', authenticateToken, async (req, res) => {
