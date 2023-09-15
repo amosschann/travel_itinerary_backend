@@ -1,8 +1,8 @@
 const express = require('express');
 const usersRouter = express.Router();
-const database = require('./../helpers/database');
+const database = require('../helpers/database');
 const bcrypt = require('bcrypt');
-const { handleServerError } = require('./../helpers/errorHelper');
+const { handleServerError } = require('../helpers/errorHelper');
 const saltRounds = 10;
 
 
