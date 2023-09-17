@@ -8,7 +8,8 @@ const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const travelsRouter = require('./routes/Travels')
 const itineraryRouter = require('./routes/itineraries')
-const mediasRouter = require('./routes/medias')
+const mediasRouter = require('./routes/medias');
+const database = require('./helpers/database');
 
 const app = express();
 // Enable CORS
@@ -19,6 +20,11 @@ app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({
   limit: '5mb',
   extended: true
+}));
+
+database.connect((err => {
+  if (err) throw err;
+  console.log('MySQL Connected!');
 }));
 
 
